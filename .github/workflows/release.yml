@@ -1,0 +1,36 @@
+name: Releases
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  changelog:
+    permissions:
+      contents: write
+      packages: write
+      id-token: write
+      issues: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.0
+
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v5.3.0
+        with:
+          github-token: ${{ secrets.PA_TOKEN }}
+          version-file: './package.json,./package-lock.json'
+
+      - name: create release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        with:
+            tag_name: ${{ steps.changelog.outputs.tag }}
+            release_name: ${{ steps.changelog.outputs.tag }}
+            body: ${{ steps.changelog.outputs.clean_changelog }}
+            commit: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.PA_TOKEN }}

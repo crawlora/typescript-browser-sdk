@@ -1,0 +1,57 @@
+{
+  "name": "@crawlora/browser",
+  "version": "1.2.12",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "description": "Crawlora SDK for interacting with the Crawlora platform.",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "package-lock.json",
+    "package.json"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node -r ts-node/register --env-file=.env ./src/.test/puppet.ts"
+  },
+  "keywords": [
+    "crawlora",
+    "web-crawling",
+    "crawler",
+    "sdk",
+    "typescript",
+    "api"
+  ],
+  "bugs": {
+    "url": "https://github.com/crawlora-com/typescript-sdk/issues"
+  },
+  "homepage": "https://crawlora.com",
+  "author": {
+    "name": "Crawlora",
+    "email": "git@crawlora.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crawlora-com/typescript-sdk.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.5.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "@sparticuz/chromium": "^127.0.0",
+    "crawlora": "^1.2.12",
+    "puppeteer": "^23.5.0",
+    "puppeteer-core": "^23.5.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-anonymize-ua": "^2.4.6",
+    "puppeteer-extra-plugin-portal": "^3.2.1",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}
