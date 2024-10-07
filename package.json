@@ -45,8 +45,8 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
+    "@crawlora/sdk": "^1.2.13",
     "@sparticuz/chromium": "^127.0.0",
-    "crawlora": "^1.2.12",
     "puppeteer": "^23.5.0",
     "puppeteer-core": "^23.5.0",
     "puppeteer-extra": "^3.3.6",

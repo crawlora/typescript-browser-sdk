@@ -1,6 +1,6 @@
 import { Browser, Page, PuppeteerLaunchOptions } from "puppeteer";
 import puppeteer from 'puppeteer-extra'
-import { SequenceOutput } from "crawlora";
+import { SequenceOutput } from "@crawlora/sdk";
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import PortalPlugin, { PluginOptions } from 'puppeteer-extra-plugin-portal';
 import AnonymizeUa from 'puppeteer-extra-plugin-anonymize-ua';
