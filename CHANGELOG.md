@@ -1,3 +1,12 @@
+## [1.0.3](https://github.com/crawlora-com/typescript-sdk/compare/v1.0.2...v1.0.3) (2024-10-07)
+
+
+### Bug Fixes
+
+* added crawlora-sdk ([64e0bd1](https://github.com/crawlora-com/typescript-sdk/commit/64e0bd1f9c5c081900625cab8b58265c76565fb1))
+
+
+
 ## [1.0.2](https://github.com/crawlora-com/typescript-sdk/compare/v1.0.1...v1.0.2) (2024-10-07)
 
 
