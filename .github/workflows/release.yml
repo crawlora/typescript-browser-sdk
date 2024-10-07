@@ -21,7 +21,7 @@ jobs:
         id: changelog
         uses: TriPSs/conventional-changelog-action@v5.3.0
         with:
-          github-token: ${{ secrets.PA_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           version-file: './package.json,./package-lock.json'
 
       - name: create release
@@ -33,4 +33,4 @@ jobs:
             body: ${{ steps.changelog.outputs.clean_changelog }}
             commit: true
         env:
-          GITHUB_TOKEN: ${{ secrets.PA_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
