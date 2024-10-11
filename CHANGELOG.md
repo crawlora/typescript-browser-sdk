@@ -1,3 +1,12 @@
+## [1.0.4](https://github.com/crawlora-com/typescript-sdk/compare/v1.0.3...v1.0.4) (2024-10-11)
+
+
+### Bug Fixes
+
+* proxy issues ([db9d835](https://github.com/crawlora-com/typescript-sdk/commit/db9d835c617c5c576b9ac5537e24de4fb020b171))
+
+
+
 ## [1.0.3](https://github.com/crawlora-com/typescript-sdk/compare/v1.0.2...v1.0.3) (2024-10-07)
 
 
