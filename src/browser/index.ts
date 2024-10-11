@@ -97,6 +97,8 @@ export async function browser(
 
     
     const proxyLinks = proxyUrl ? `--proxy-server=${proxyUrl}` : '';
+
+    browserDebug("proxy sever " + proxyLinks)
     
     const args = [proxyLinks, ...chromium.args, ...defaultConfigs?.args || []]
     .map((v) => v)
@@ -121,7 +123,9 @@ export async function browser(
     browserDebug(`launching new page`)
 
     const page = await browser.newPage()
-
+    if (proxyConfig && proxyConfig.credential) {
+    await page.authenticate({ username: proxyConfig.credential?.user_name, password: proxyConfig.credential?.password})
+    }
     browserDebug(`launched new page`)
     
     const output = new SequenceOutput(apikey)
