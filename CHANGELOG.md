@@ -1,3 +1,14 @@
+## [1.0.5](https://github.com/crawlora-com/typescript-sdk/compare/v1.0.4...v1.0.5) (2024-10-19)
+
+
+### Bug Fixes
+
+* accepting error messages ([b8df401](https://github.com/crawlora-com/typescript-sdk/commit/b8df401ebe2f0caa7c5644b301dfe8020c66bfbd))
+* added step to build it before release ([9620fa3](https://github.com/crawlora-com/typescript-sdk/commit/9620fa35d18e7d34b3021d027176a46a9216a24a))
+* remote and proxy issues ([9b8dc70](https://github.com/crawlora-com/typescript-sdk/commit/9b8dc70d3b7bd061bdc5859b31083fba6562846a))
+
+
+
 ## [1.0.4](https://github.com/crawlora-com/typescript-sdk/compare/v1.0.3...v1.0.4) (2024-10-11)
 
 
