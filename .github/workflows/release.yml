@@ -17,12 +17,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.2.0
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4.0.4
+        with:
+          node-version-file: '.nvmrc'  # You can adjust this based on your node version
+          cache: 'npm'
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run build
+        run: |
+          npm i @crawlora/sdk@latest
+          npm run build
+
       - name: Conventional Changelog Action
         id: changelog
         uses: TriPSs/conventional-changelog-action@v5.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          version-file: './package.json,./package-lock.json'
+          version-file: './package.json'
 
       - name: create release
         uses: actions/create-release@v1
