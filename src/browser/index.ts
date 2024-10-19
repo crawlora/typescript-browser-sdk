@@ -1,6 +1,6 @@
 import { Browser, Page, PuppeteerLaunchOptions } from "puppeteer";
 import puppeteer from "puppeteer-extra";
-import { SequenceOutput } from "@crawlora/sdk";
+import { SequenceOutput, Sequence } from "@crawlora/sdk";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import PortalPlugin, { PluginOptions } from "puppeteer-extra-plugin-portal";
 import AnonymizeUa from "puppeteer-extra-plugin-anonymize-ua";
@@ -10,8 +10,11 @@ import chromium from "@sparticuz/chromium";
 import {
   CHROME_PATH,
   defaultProxyConfigs,
+  forceShouldHideBrowser,
   forceShouldShowBrowser,
   forceUseProxyByDefault,
+  getSequenceId,
+  hasSequenceId,
   shouldShowBrowser,
 } from "../config";
 import { browserDebug } from "../util/debug";
@@ -95,7 +98,12 @@ export async function browser(
     showBrowser = true;
   }
 
+  if(forceShouldHideBrowser()){
+    showBrowser = false;
+  }
+
   let browser: Browser | null = null;
+  const seq = new Sequence(apikey)
 
   try {
     const executablePath = browserPath || (await CHROME_PATH());
@@ -181,13 +189,44 @@ export async function browser(
 
     const output = new SequenceOutput(apikey);
 
+   
+
     browserDebug(`running callback function`);
+
+    //send start event to the api
+
+    // in_progress
+    if(hasSequenceId()){
+      await seq.update(getSequenceId(), {status: 'in_progress'}).catch(e => {
+        browserDebug(`could not update status because ${e.message}`);
+        console.error(e)
+      })
+    }
 
     await func({ puppeteer: browser, page, output, debug: browserDebug, wait });
 
+    //send stop event to the api
+    if(hasSequenceId()){
+      await seq.update(getSequenceId(), {status: 'success'}).catch(e => {
+        browserDebug(`could not update status because ${e.message}`);
+        console.error(e)
+      })
+    }
+
+    //complete
     browserDebug(`successfully running callback function`);
   } catch (e) {
+    // send error event to the api
     browserDebug(`received an error`);
+
+    if(hasSequenceId()){
+      await seq.update(getSequenceId(), {status: 'failed', error: (e as Error).stack || (e as Error).message}).catch(e => {
+        browserDebug(`could not update status because ${e.message}`);
+        console.error(e)
+      })
+    }
+
+    // error
 
     throw e;
   } finally {

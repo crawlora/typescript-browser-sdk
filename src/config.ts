@@ -17,8 +17,21 @@ export const CHROME_PATH = async () =>
 
 export const shouldShowBrowser = () => process.env['SHOW_BROWSER'] === 'true'
 export const forceShouldShowBrowser = () => process.env['FORCE_SHOW_BROWSER'] === 'true'
+export const forceShouldHideBrowser = () => process.env['FORCE_HIDE_BROWSER'] === 'true'
 
 export const forceUseProxyByDefault = () => process.env['FORCE_USE_PROXY'] === 'true'
+
+export const getSequenceId = () => {
+  if(!process.env['SEQUENCE_ID']){
+    throw new Error(`SEQUENCE_ID not found`)
+  }
+
+  return process.env['SEQUENCE_ID']
+}
+
+export const hasSequenceId = () => {
+  return Boolean(process.env['SEQUENCE_ID'])
+}
 
 export const defaultProxyConfigs = () => {
   const { env } = process

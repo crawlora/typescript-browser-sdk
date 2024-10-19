@@ -29,7 +29,9 @@ jobs:
       run: npm install
 
     - name: Run build
-      run: npm run build
+      run: |
+        npm i @crawlora/sdk@latest
+        npm run build
 
     - name: Publish to npm
       run: npm publish --access public --registry https://registry.npmjs.org/ --loglevel verbose
