@@ -106,7 +106,7 @@ export async function browser(
   apikey = getAuthKey()
 
   let browser: Browser | null = null;
-  const seq = new Sequence(apikey, new URL('http://localhost:7007/api/v1'))
+  const seq = new Sequence(apikey)
 
   try {
     const executablePath = browserPath || (await CHROME_PATH());
