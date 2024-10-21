@@ -1,3 +1,13 @@
+## [1.0.6](https://github.com/crawlora-com/typescript-sdk/compare/v1.0.5...v1.0.6) (2024-10-21)
+
+
+### Bug Fixes
+
+* api-key ([27b76ee](https://github.com/crawlora-com/typescript-sdk/commit/27b76ee26d44a872fb94253281c6a66d2382fbbf))
+* api-key ([3fea33a](https://github.com/crawlora-com/typescript-sdk/commit/3fea33a5f8c15eaa8e118caf9f39842ac3ba475e))
+
+
+
 ## [1.0.5](https://github.com/crawlora-com/typescript-sdk/compare/v1.0.4...v1.0.5) (2024-10-19)
 
 
@@ -33,15 +43,6 @@
 ### Bug Fixes
 
 * publish ([591f83e](https://github.com/crawlora-com/typescript-sdk/commit/591f83ed7dc4cb36ce9a31f9eecfd024e46e3886))
-
-
-
-## [1.0.1](https://github.com/crawlora-com/typescript-sdk/compare/b69d26040bb17484f10e05698319f7f0ba4c5a9b...v1.0.1) (2024-10-07)
-
-
-### Bug Fixes
-
-* publish ([b69d260](https://github.com/crawlora-com/typescript-sdk/commit/b69d26040bb17484f10e05698319f7f0ba4c5a9b))
 
 
 
