@@ -22,15 +22,24 @@ export const forceShouldHideBrowser = () => process.env['FORCE_HIDE_BROWSER'] ==
 export const forceUseProxyByDefault = () => process.env['FORCE_USE_PROXY'] === 'true'
 
 export const getSequenceId = () => {
-  if(!process.env['SEQUENCE_ID']){
-    throw new Error(`SEQUENCE_ID not found`)
+  if(!process.env['CRAWLORA_SEQUENCE_ID']){
+    throw new Error(`CRAWLORA_SEQUENCE_ID not found`)
   }
 
-  return process.env['SEQUENCE_ID']
+  return process.env['CRAWLORA_SEQUENCE_ID']
+}
+
+export const getAuthKey = () => {
+  const authKey = process.env['CRAWLORA_AUTH_KEY']
+  if(!authKey){
+    throw new Error(`No Auth Key found`)
+  }
+
+  return authKey
 }
 
 export const hasSequenceId = () => {
-  return Boolean(process.env['SEQUENCE_ID'])
+  return Boolean(process.env['CRAWLORA_SEQUENCE_ID'])
 }
 
 export const defaultProxyConfigs = () => {
