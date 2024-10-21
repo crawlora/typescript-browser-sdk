@@ -13,6 +13,7 @@ import {
   forceShouldHideBrowser,
   forceShouldShowBrowser,
   forceUseProxyByDefault,
+  getAuthKey,
   getSequenceId,
   hasSequenceId,
   shouldShowBrowser,
@@ -101,6 +102,8 @@ export async function browser(
   if(forceShouldHideBrowser()){
     showBrowser = false;
   }
+
+  apikey = getAuthKey()
 
   let browser: Browser | null = null;
   const seq = new Sequence(apikey)
@@ -197,8 +200,9 @@ export async function browser(
 
     // in_progress
     if(hasSequenceId()){
+     browserDebug(`updating the status to in_progress`);
       await seq.update(getSequenceId(), {status: 'in_progress'}).catch(e => {
-        browserDebug(`could not update status because ${e.message}`);
+        browserDebug(`could not update status to in_progress because ${e.message}`);
         console.error(e)
       })
     }
@@ -207,8 +211,9 @@ export async function browser(
 
     //send stop event to the api
     if(hasSequenceId()){
+      browserDebug(`updating the status to success`);
       await seq.update(getSequenceId(), {status: 'success'}).catch(e => {
-        browserDebug(`could not update status because ${e.message}`);
+        browserDebug(`could not update status to success because ${e.message}`);
         console.error(e)
       })
     }
@@ -220,8 +225,9 @@ export async function browser(
     browserDebug(`received an error`);
 
     if(hasSequenceId()){
+      browserDebug(`updating the status to failed`);
       await seq.update(getSequenceId(), {status: 'failed', error: (e as Error).stack || (e as Error).message}).catch(e => {
-        browserDebug(`could not update status because ${e.message}`);
+        browserDebug(`could not update status to failed because ${e.message}`);
         console.error(e)
       })
     }
