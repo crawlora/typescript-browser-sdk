@@ -1,6 +1,6 @@
 import { Browser, Page, PuppeteerLaunchOptions } from "puppeteer";
 import puppeteer from "puppeteer-extra";
-import { SequenceOutput, Sequence } from "@crawlora/sdk";
+import { SequenceOutput } from "@crawlora/sdk";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import PortalPlugin, { PluginOptions } from "puppeteer-extra-plugin-portal";
 import AnonymizeUa from "puppeteer-extra-plugin-anonymize-ua";
@@ -14,13 +14,12 @@ import {
   forceShouldShowBrowser,
   forceUseProxyByDefault,
   getAuthKey,
-  getSequenceId,
-  hasSequenceId,
   shouldShowBrowser,
 } from "../config";
 import { browserDebug } from "../util/debug";
-import fs from 'fs';
-import os from 'os';
+import fs from "fs";
+import os from "os";
+import { SequenceStatus, updateSequenceStatus } from "../services";
 
 type NonNegativeInteger<T extends number> = number extends T
   ? never
@@ -29,9 +28,9 @@ type NonNegativeInteger<T extends number> = number extends T
   : T;
 
 export const getRandomUserDir = () => {
-  const userDir = fs.mkdtempSync( os.tmpdir() +  '/puppet')
-  return userDir
-}
+  const userDir = fs.mkdtempSync(os.tmpdir() + "/puppet");
+  return userDir;
+};
 
 export async function wait<N extends number>(sec: NonNegativeInteger<N>) {
   const shouldWait = sec * 1000;
@@ -89,7 +88,8 @@ export async function browser(
     proxyConfig,
     remotePortalConfig,
     browserPath,
-  }: Conf = {}
+  }: Conf = {},
+  enableUpdate: boolean = true
 ) {
   if (!showBrowser) {
     showBrowser = shouldShowBrowser();
@@ -99,14 +99,15 @@ export async function browser(
     showBrowser = true;
   }
 
-  if(forceShouldHideBrowser()){
+  if (forceShouldHideBrowser()) {
     showBrowser = false;
   }
 
-  apikey = getAuthKey()
+  if (!apikey) {
+    apikey = getAuthKey();
+  }
 
   let browser: Browser | null = null;
-  const seq = new Sequence(apikey)
 
   try {
     const executablePath = browserPath || (await CHROME_PATH());
@@ -178,10 +179,10 @@ export async function browser(
     const page = await browser.newPage();
 
     if (
-        proxyConfig && 
-        proxyConfig.credential && 
-        Object.values(proxyConfig.credential).length === 2
-      ) {
+      proxyConfig &&
+      proxyConfig.credential &&
+      Object.values(proxyConfig.credential).length === 2
+    ) {
       await page.authenticate({
         username: proxyConfig.credential.user_name,
         password: proxyConfig.credential.password,
@@ -192,31 +193,18 @@ export async function browser(
 
     const output = new SequenceOutput(apikey);
 
-   
-
     browserDebug(`running callback function`);
 
     //send start event to the api
 
     // in_progress
-    if(hasSequenceId()){
-     browserDebug(`updating the status to in_progress`);
-      await seq.update(getSequenceId(), {status: 'in_progress'}).catch(e => {
-        browserDebug(`could not update status to in_progress because ${e.message}`);
-        console.error(e)
-      })
-    }
+    if (enableUpdate)
+      await updateSequenceStatus(SequenceStatus.InProgress, apikey);
 
     await func({ puppeteer: browser, page, output, debug: browserDebug, wait });
 
-    //send stop event to the api
-    if(hasSequenceId()){
-      browserDebug(`updating the status to success`);
-      await seq.update(getSequenceId(), {status: 'success'}).catch(e => {
-        browserDebug(`could not update status to success because ${e.message}`);
-        console.error(e)
-      })
-    }
+    if (enableUpdate)
+      await updateSequenceStatus(SequenceStatus.Success, apikey);
 
     //complete
     browserDebug(`successfully running callback function`);
@@ -224,20 +212,17 @@ export async function browser(
     // send error event to the api
     browserDebug(`received an error`);
 
-    if(hasSequenceId()){
-      browserDebug(`updating the status to failed`);
-      await seq.update(getSequenceId(), {status: 'failed', error: (e as Error).stack || (e as Error).message}).catch(e => {
-        browserDebug(`could not update status to failed because ${e.message}`);
-        console.error(e)
-      })
+    if (enableUpdate) {
+      await updateSequenceStatus(
+        SequenceStatus.Failed,
+        apikey,
+        (e as Error).stack || (e as Error).message
+      );
     }
-
-    // error
 
     throw e;
   } finally {
     browserDebug(`closing the browser`);
-
     await browser?.close();
   }
 }
