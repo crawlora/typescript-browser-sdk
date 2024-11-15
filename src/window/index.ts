@@ -3,7 +3,7 @@ import { browserDebug } from "../util/debug";
 import { SequenceStatus, updateSequenceStatus } from "../services";
 import { getAuthKey } from "../config";
 
-export async function window<T>(
+export async function windows<T>(
     formedData: T[],
     func: (value: T, args: FunArgs, config: Conf) => Promise<void>,
     conf: Conf = {}
