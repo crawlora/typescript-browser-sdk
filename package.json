@@ -1,6 +1,6 @@
 {
   "name": "@crawlora/browser",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "description": "Crawlora SDK for interacting with the Crawlora platform.",
