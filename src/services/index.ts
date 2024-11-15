@@ -1,6 +1,6 @@
 import { Sequence } from "@crawlora/sdk";
 import { getSequenceId, hasSequenceId } from "../config";
-import { sequenceDebug } from "../util/debug";
+import { browserDebug } from "../util/debug";
 
 export enum SequenceStatus {
     InProgress = "in_progress",
@@ -27,10 +27,10 @@ export async function updateSequenceStatus(
     }
 
     try {
-        sequenceDebug(`updating the status to ${status}`);
+        browserDebug(`updating the status to ${status}`);
         await seq.update(getSequenceId(), statusData);
     } catch (e) {
-        sequenceDebug(
+        browserDebug(
             `could not update status to ${status} because ${(e as Error).message}`
         );
         console.error(e);
