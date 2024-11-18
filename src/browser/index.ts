@@ -57,6 +57,7 @@ const defaultConfigs: PuppeteerLaunchOptions = {
     "--flag-switches-begin",
     "--disable-site-isolation-trials",
     "--flag-switches-end",
+    "--incognito",
   ],
   headless: false,
 };
@@ -174,9 +175,16 @@ export async function browser(
 
     browserDebug(`launched browser`);
 
-    browserDebug(`launching new page`);
+    const allPages = await browser.pages();
 
-    const page = await browser.newPage();
+    // close 1 page
+    await allPages.at(1)?.close();
+
+    const page = allPages.at(0);
+
+    if (!page) {
+      throw new Error(`No page created`);
+    }
 
     if (
       proxyConfig &&

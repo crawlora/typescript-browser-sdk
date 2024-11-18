@@ -22,6 +22,9 @@ export async function windows<T>(
                 await args.wait(2)
             }, conf, false);
         }
+
+        // Update status to "success" on completion
+        await updateSequenceStatus(SequenceStatus.Success, apikey);
     } catch (e) {
         browserDebug(`received an error`);
 
@@ -29,8 +32,5 @@ export async function windows<T>(
         await updateSequenceStatus(SequenceStatus.Failed, apikey, (e as Error).stack || (e as Error).message);
 
         throw e;
-    } finally {
-        // Update status to "success" on completion
-        await updateSequenceStatus(SequenceStatus.Success, apikey);
     }
 }
