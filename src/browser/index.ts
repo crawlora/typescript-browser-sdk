@@ -60,7 +60,8 @@ const defaultConfigs: PuppeteerLaunchOptions = {
     "--incognito",
     '--disable-setuid-sandbox',
     '--disable-dev-shm-usage',
-    '--single-process'
+    '--single-process',
+    '--disable-http2'
   ],
   headless: false,
 };
