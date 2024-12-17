@@ -1,6 +1,6 @@
 {
   "name": "@crawlora/browser",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "description": "Crawlora SDK for interacting with the Crawlora platform.",
@@ -45,7 +45,7 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
-    "@crawlora/sdk": "^1.2.23",
+    "@crawlora/sdk": "^1.2.30",
     "@sparticuz/chromium": "^127.0.0",
     "puppeteer": "^23.8.0",
     "puppeteer-core": "^23.5.0",
