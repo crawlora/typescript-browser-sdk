@@ -58,6 +58,9 @@ const defaultConfigs: PuppeteerLaunchOptions = {
     "--disable-site-isolation-trials",
     "--flag-switches-end",
     "--incognito",
+    '--disable-setuid-sandbox',
+    '--disable-dev-shm-usage',
+    '--single-process'
   ],
   headless: false,
 };
