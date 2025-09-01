@@ -129,3 +129,5 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 ## License
 
 This SDK is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+<!-- Security scan triggered at 2025-09-01 23:08:08 -->
